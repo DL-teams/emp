@@ -5,6 +5,5 @@
     <li class="<%=request.getParameter("Dept_active")%>"><a class="btn btn-pill btn-line btn-warning" href="deptList">部门管理</a></li>
     <li class="<%=request.getParameter("Leave_active")%>"><a class="btn btn-pill btn-line btn-warning" href="leaveList">请假管理</a></li>
     <li class="<%=request.getParameter("Salary_active")%>"><a class="btn btn-pill btn-line btn-warning" href="salaryList">工资管理</a></li>
-
-    <li class="<%=request.getParameter("introduce_active")%>"><a class="btn btn-pill btn-line btn-warning" href="introduce.jsp">关于</a></li>
+    <li class="<%=request.getParameter("announcement_active")%>"><a class="btn btn-pill btn-line btn-warning" href="announcementList">公告管理</a></li>
 </ul>

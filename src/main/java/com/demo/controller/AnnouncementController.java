@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/announcement")
 public class AnnouncementController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class AnnouncementController {
      * @param request
      * @throws IOException
      */
-    @RequestMapping("/add")
+    @RequestMapping("/announcementAdd")
     public void add(HttpServletResponse response, HttpServletRequest request) throws IOException {
         Announcement vo = new Announcement();
         //取出页面传进来的参数
@@ -47,7 +47,7 @@ public class AnnouncementController {
      * @param request
      * @throws IOException
      */
-    @RequestMapping("/delete")
+    @RequestMapping("/announcementDelete")
     public void delete(HttpServletResponse response, HttpServletRequest request) throws IOException {
         Serializable id = Util.decode(request, "id");
         announcementService.delete(Arrays.asList(id));
@@ -61,7 +61,7 @@ public class AnnouncementController {
      * @param request
      * @throws IOException
      */
-    @RequestMapping("/edit")
+    @RequestMapping("/announcementEdit")
     public void edit(HttpServletResponse response, HttpServletRequest request) throws IOException {
         Announcement vo = new Announcement();
         vo.setId(Long.valueOf(Util.decode(request, "id")));
@@ -78,7 +78,7 @@ public class AnnouncementController {
      * @param request
      * @throws IOException
      */
-    @RequestMapping({"/get"})
+    @RequestMapping({"/announcementGet"})
     public void get(HttpServletResponse response, HttpServletRequest request) throws IOException {
         Serializable id = Util.decode(request, "id");//取出主键id
         Announcement vo = announcementService.get(id);
@@ -92,7 +92,7 @@ public class AnnouncementController {
      * @param request
      * @throws IOException
      */
-    @RequestMapping("/list")
+    @GetMapping("/announcementList")
     public void list(HttpServletResponse response, HttpServletRequest request) throws IOException {
         this.redirectList(request, response);
     }
