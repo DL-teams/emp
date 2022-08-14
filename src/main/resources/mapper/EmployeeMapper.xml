@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.dao.EmployeeMapper">
+
+    <resultMap id="BaseResultMap" type="com.demo.vo.Employee" >
+            <result column="id" property="id" />
+            <result column="employee_name" property="employeeName" />
+            <result column="employee_sex" property="employeeSex" />
+            <result column="employee_phone" property="employeePhone" />
+            <result column="employee_dept" property="employeeDept" />
+            <result column="employee_job" property="employeeJob" />
+            <result column="employee_no" property="employeeNo" />
+            <result column="employee_age" property="employeeAge" />
+            <result column="employee_education" property="employeeEducation" />
+            <result column="employee_intime" property="employeeIntime" />
+            <result column="employee_text" property="employeeText" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `id`,`employee_name`,`employee_sex`,`employee_phone`,`employee_dept`,`employee_job`,`employee_no`,`employee_age`,`employee_education`,`employee_intime`,`employee_text`
+    </sql>
+
+    <!--新增-->
+    <insert id="doCreate" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.demo.vo.Employee">
+        INSERT INTO `t_employee`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test ='id != null'>`id`,</if>
+                    <if test ='employeeName != null'>`employee_name`,</if>
+                    <if test ='employeeSex != null'>`employee_sex`,</if>
+                    <if test ='employeePhone != null'>`employee_phone`,</if>
+                    <if test ='employeeDept != null'>`employee_dept`,</if>
+                    <if test ='employeeJob != null'>`employee_job`,</if>
+                    <if test ='employeeNo != null'>`employee_no`,</if>
+                    <if test ='employeeAge != null'>`employee_age`,</if>
+                    <if test ='employeeEducation != null'>`employee_education`,</if>
+                    <if test ='employeeIntime != null'>`employee_intime`,</if>
+                    <if test ='employeeText != null'>`employee_text`</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test ='id != null'>#{id},</if>
+                    <if test ='employeeName != null'>#{employeeName},</if>
+                    <if test ='employeeSex != null'>#{employeeSex},</if>
+                    <if test ='employeePhone != null'>#{employeePhone},</if>
+                    <if test ='employeeDept != null'>#{employeeDept},</if>
+                    <if test ='employeeJob != null'>#{employeeJob},</if>
+                    <if test ='employeeNo != null'>#{employeeNo},</if>
+                    <if test ='employeeAge != null'>#{employeeAge},</if>
+                    <if test ='employeeEducation != null'>#{employeeEducation},</if>
+                    <if test ='employeeIntime != null'>#{employeeIntime},</if>
+                    <if test ='employeeText != null'>#{employeeText}</if>
+        </trim>
+    </insert>
+
+    <!--批量删除-->
+    <delete id="doRemoveBatch" parameterType="java.util.Collection">
+        DELETE FROM `t_employee` WHERE `id` IN
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--修改-->
+    <update id="doUpdate" parameterType="com.demo.vo.Employee">
+        UPDATE `t_employee`
+        <set>
+                <if test ='id != null'>`id` = #{id},</if>
+                <if test ='employeeName != null'>`employee_name` = #{employeeName},</if>
+                <if test ='employeeSex != null'>`employee_sex` = #{employeeSex},</if>
+                <if test ='employeePhone != null'>`employee_phone` = #{employeePhone},</if>
+                <if test ='employeeDept != null'>`employee_dept` = #{employeeDept},</if>
+                <if test ='employeeJob != null'>`employee_job` = #{employeeJob},</if>
+                <if test ='employeeNo != null'>`employee_no` = #{employeeNo},</if>
+                <if test ='employeeAge != null'>`employee_age` = #{employeeAge},</if>
+                <if test ='employeeEducation != null'>`employee_education` = #{employeeEducation},</if>
+                <if test ='employeeIntime != null'>`employee_intime` = #{employeeIntime},</if>
+                <if test ='employeeText != null'>`employee_text` = #{employeeText}</if>
+        </set>
+        WHERE `id` = #{id}
+    </update>
+
+    <!--获取-->
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> FROM `t_employee` WHERE `id` = #{id}
+    </select>
+
+    <!--列表-->
+    <select id="findAllSplit" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> FROM `t_employee`
+        <where>
+            <if test="searchColumn != null and searchColumn != '' and keyword != null and keyword != ''">
+                ${searchColumn} LIKE CONCAT('%',#{keyword},'%')  AND
+            </if>
+            1=1
+        </where>
+        ORDER BY id ASC
+        <if test="startIndex != null and pageSize != null">
+            LIMIT #{startIndex},#{pageSize};
+        </if>
+    </select>
+    <!--数量-->
+    <select id="getAllCount" parameterType="java.util.Map" resultType="Integer">
+        SELECT COUNT(*) FROM `t_employee`
+        <where>
+            <if test="searchColumn != null and searchColumn != '' and keyword != null and keyword != ''">
+                ${searchColumn} LIKE CONCAT('%',#{keyword},'%')  AND
+            </if>
+            1=1
+        </where>
+    </select>
+</mapper>

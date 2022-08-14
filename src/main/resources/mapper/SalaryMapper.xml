@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.dao.SalaryMapper">
+
+    <resultMap id="BaseResultMap" type="com.demo.vo.Salary" >
+            <result column="id" property="id" />
+            <result column="salary_name" property="salaryName" />
+            <result column="salary_no" property="salaryNo" />
+            <result column="salary_dept" property="salaryDept" />
+            <result column="salary_money" property="salaryMoney" />
+            <result column="salary_fmoney" property="salaryFmoney" />
+            <result column="salary_tmoney" property="salaryTmoney" />
+            <result column="salary_text" property="salaryText" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `id`,`salary_name`,`salary_no`,`salary_dept`,`salary_money`,`salary_fmoney`,`salary_tmoney`,`salary_text`
+    </sql>
+
+    <!--新增-->
+    <insert id="doCreate" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.demo.vo.Salary">
+        INSERT INTO `t_salary`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test ='id != null'>`id`,</if>
+                    <if test ='salaryName != null'>`salary_name`,</if>
+                    <if test ='salaryNo != null'>`salary_no`,</if>
+                    <if test ='salaryDept != null'>`salary_dept`,</if>
+                    <if test ='salaryMoney != null'>`salary_money`,</if>
+                    <if test="salaryFmoney !=null">`salary_fmoney`,</if>
+                    <if test="salaryTmoney !=null">`salary_tmoney`,</if>
+                    <if test ='salaryText  != null'>`salary_text`</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test ='id != null'>#{id},</if>
+                    <if test ='salaryName != null'>#{salaryName},</if>
+                    <if test ='salaryNo != null'>#{salaryNo},</if>
+                    <if test ='salaryDept != null'>#{salaryDept},</if>
+                    <if test ='salaryMoney != null'>#{salaryMoney},</if>
+                    <if test="salaryFmoney !=null">#{salaryFmoney},</if>
+                    <if test="salaryTmoney !=null">#{salaryTmoney},</if>
+                    <if test ='salaryText != null'>#{salaryText}</if>
+        </trim>
+    </insert>
+
+    <!--批量删除-->
+    <delete id="doRemoveBatch" parameterType="java.util.Collection">
+        DELETE FROM `t_salary` WHERE `id` IN
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--修改-->
+    <update id="doUpdate" parameterType="com.demo.vo.Salary">
+        UPDATE `t_salary`
+        <set>
+                <if test ='id != null'>`id` = #{id},</if>
+                <if test ='salaryName != null'>`salary_name` = #{salaryName},</if>
+                <if test ='salaryNo != null'>`salary_no` = #{salaryNo},</if>
+                <if test ='salaryDept != null'>`salary_dept` = #{salaryDept},</if>
+                <if test ='salaryMoney != null'>`salary_money` = #{salaryMoney},</if>
+                <if test ='salaryFmoney != null'>`salary_fmoney` = #{salaryFmoney},</if>
+                <if test ='salaryTmoney != null'>`salary_tmoney` = #{salaryTmoney},</if>
+                <if test ='salaryText != null'>`salary_text` = #{salaryText}</if>
+        </set>
+        WHERE `id` = #{id}
+    </update>
+
+    <!--获取-->
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> FROM `t_salary` WHERE `id` = #{id}
+    </select>
+
+    <!--列表-->
+    <select id="findAllSplit" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> FROM `t_salary`
+        <where>
+            <if test="searchColumn != null and searchColumn != '' and keyword != null and keyword != ''">
+                ${searchColumn} LIKE CONCAT('%',#{keyword},'%')  AND
+            </if>
+            1=1
+        </where>
+        ORDER BY id ASC
+        <if test="startIndex != null and pageSize != null">
+            LIMIT #{startIndex},#{pageSize};
+        </if>
+    </select>
+    <!--数量-->
+    <select id="getAllCount" parameterType="java.util.Map" resultType="Integer">
+        SELECT COUNT(*) FROM `t_salary`
+        <where>
+            <if test="searchColumn != null and searchColumn != '' and keyword != null and keyword != ''">
+                ${searchColumn} LIKE CONCAT('%',#{keyword},'%')  AND
+            </if>
+            1=1
+        </where>
+    </select>
+</mapper>

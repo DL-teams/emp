@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.dao.LeaveMapper">
+
+    <resultMap id="BaseResultMap" type="com.demo.vo.Leave" >
+            <result column="id" property="id" />
+            <result column="leave_no" property="leaveNo" />
+            <result column="leave_name" property="leaveName" />
+            <result column="leave_start" property="leaveStart" />
+            <result column="leave_end" property="leaveEnd" />
+            <result column="leave_days" property="leaveDays" />
+            <result column="leave_reason" property="leaveReason" />
+            <result column="leave_text" property="leaveText" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `id`,`leave_no`,`leave_name`,`leave_start`,`leave_end`,`leave_days`,`leave_reason`,`leave_text`
+    </sql>
+
+    <!--新增-->
+    <insert id="doCreate" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.demo.vo.Leave">
+        INSERT INTO `t_leave`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test ='id != null'>`id`,</if>
+                    <if test ='leaveNo != null'>`leave_no`,</if>
+                    <if test ='leaveName != null'>`leave_name`,</if>
+                    <if test ='leaveStart != null'>`leave_start`,</if>
+                    <if test ='leaveEnd != null'>`leave_end`,</if>
+                    <if test ='leaveDays != null'>`leave_days`,</if>
+                    <if test ='leaveReason != null'>`leave_reason`,</if>
+                    <if test ='leaveText != null'>`leave_text`</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test ='id != null'>#{id},</if>
+                    <if test ='leaveNo != null'>#{leaveNo},</if>
+                    <if test ='leaveName != null'>#{leaveName},</if>
+                    <if test ='leaveStart != null'>#{leaveStart},</if>
+                    <if test ='leaveEnd != null'>#{leaveEnd},</if>
+                    <if test ='leaveDays != null'>#{leaveDays},</if>
+                    <if test ='leaveReason != null'>#{leaveReason},</if>
+                    <if test ='leaveText != null'>#{leaveText}</if>
+        </trim>
+    </insert>
+
+    <!--批量删除-->
+    <delete id="doRemoveBatch" parameterType="java.util.Collection">
+        DELETE FROM `t_leave` WHERE `id` IN
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--修改-->
+    <update id="doUpdate" parameterType="com.demo.vo.Leave">
+        UPDATE `t_leave`
+        <set>
+                <if test ='id != null'>`id` = #{id},</if>
+                <if test ='leaveNo != null'>`leave_no` = #{leaveNo},</if>
+                <if test ='leaveName != null'>`leave_name` = #{leaveName},</if>
+                <if test ='leaveStart != null'>`leave_start` = #{leaveStart},</if>
+                <if test ='leaveEnd != null'>`leave_end` = #{leaveEnd},</if>
+                <if test ='leaveDays != null'>`leave_days` = #{leaveDays},</if>
+                <if test ='leaveReason != null'>`leave_reason` = #{leaveReason},</if>
+                <if test ='leaveText != null'>`leave_text` = #{leaveText}</if>
+        </set>
+        WHERE `id` = #{id}
+    </update>
+
+    <!--获取-->
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> FROM `t_leave` WHERE `id` = #{id}
+    </select>
+
+    <!--列表-->
+    <select id="findAllSplit" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> FROM `t_leave`
+        <where>
+            <if test="searchColumn != null and searchColumn != '' and keyword != null and keyword != ''">
+                ${searchColumn} LIKE CONCAT('%',#{keyword},'%')  AND
+            </if>
+            1=1
+        </where>
+        ORDER BY id ASC
+        <if test="startIndex != null and pageSize != null">
+            LIMIT #{startIndex},#{pageSize};
+        </if>
+    </select>
+    <!--数量-->
+    <select id="getAllCount" parameterType="java.util.Map" resultType="Integer">
+        SELECT COUNT(*) FROM `t_leave`
+        <where>
+            <if test="searchColumn != null and searchColumn != '' and keyword != null and keyword != ''">
+                ${searchColumn} LIKE CONCAT('%',#{keyword},'%')  AND
+            </if>
+            1=1
+        </where>
+    </select>
+</mapper>
