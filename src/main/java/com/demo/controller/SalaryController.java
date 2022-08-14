@@ -38,6 +38,8 @@ public class SalaryController {
         vo.setSalaryNo(Util.decode(request, "salaryNo"));
         vo.setSalaryDept(Util.decode(request, "salaryDept"));
         vo.setSalaryMoney(Util.decode(request, "salaryMoney"));
+        vo.setSalaryFmoney(Util.decode(request, "salaryFmoney"));
+        vo.setSalaryTmoney(Util.decode(request, "salaryTmoney"));
         vo.setSalaryText(Util.decode(request, "salaryText"));
         //调用Service层的增加（insert）方法
         salaryService.insert(vo);
@@ -73,6 +75,8 @@ public class SalaryController {
         vo.setSalaryNo(Util.decode(request, "salaryNo"));
         vo.setSalaryDept(Util.decode(request, "salaryDept"));
         vo.setSalaryMoney(Util.decode(request, "salaryMoney"));
+        vo.setSalaryFmoney(Util.decode(request, "salaryFmoney"));
+        vo.setSalaryTmoney(Util.decode(request, "salaryTmoney"));
         vo.setSalaryText(Util.decode(request, "salaryText"));
         salaryService.update(vo);
         this.redirectList(request, response);
