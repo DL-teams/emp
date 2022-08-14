@@ -50,25 +50,25 @@
             </div>
             <c:forEach items="${list}" var="vo">
                 <div class="">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="thumbnail">
                             <div class="caption">
-                                <div style="border-bottom: 1px solid black;text-align: center"><h4>${vo.title}</h4></div>
-                                <div style="height:150px;margin-top: 5px">${vo.value}</div>
+                                <div style="border-bottom: 1px solid black;text-align: center;text-overflow:ellipsis;overflow: hidden"><h4>${vo.title}</h4></div>
+                                <div style="height:150px;margin-top: 5px;">${vo.value}</div>
                                 <p>
                                     <button type="button" <c:if test="${loginUser.userType != '管理员'}">disabled="disabled" title="没有权限！！！"</c:if>
-                                            class="btn btn-primary"
+                                            class="btn btn-pill btn-line btn-warning btn-sm"
                                             data-id="${vo.id}"
                                             data-toggle="modal"
                                             data-target="#modal-edit">编辑</button>
-                                    <button class="btn btn-info" data-id="${vo.id}"
+                                    <button class="btn btn-pill btn-line btn-warning btn-sm" data-id="${vo.id}"
                                             data-toggle="modal" data-target="#modal-info">详情
                                     </button>
                                     <button type="button" <c:if test="${loginUser.userType != '管理员'}">disabled="disabled" title="没有权限！！！"</c:if>
                                             data-id="${vo.id}"
                                             data-toggle="modal"
                                             data-target="#modal-delete"
-                                            class="btn btn-danger">删除</button>
+                                            class="btn btn-pill btn-line btn-warning btn-sm">删除</button>
                                 </p>
                             </div>
                         </div>
@@ -171,7 +171,7 @@
                     </div>
                     <div class="form-group">
                         <label for="edit-value" class="control-label">内容:</label>
-                        <textarea style="height: 150px" type="text" class="form-control" name="announcementValue" id="edit-value">
+                        <textarea style="height: 150px" type="text" rows="30" cols="30" class="form-control" name="announcementValue" id="edit-value">
                         </textarea>
                     </div>
                 </div>
