@@ -144,15 +144,15 @@
                     </div>
                     <div class="form-group">
                         <label for="add-salaryMoney" class="control-label">薪资:</label>
-                        <input type="text" class="form-control" name="salaryMoney" id="add-salaryMoney">
+                        <input type="text" class="form-control" name="salaryMoney" id="add-salaryMoney" onchange="countSalary()">
                     </div>
                     <div class="form-group">
                         <label for="add-salaryMoney" class="control-label">扣除薪资:</label>
-                        <input type="text" class="form-control" name="salaryFmoney" id="add-salaryFmoney">
+                        <input type="text" class="form-control" name="salaryFmoney" id="add-salaryFmoney" onchange="countSalary()">
                     </div>
                     <div class="form-group">
                         <label for="add-salaryMoney" class="control-label">实际薪资:</label>
-                        <input type="text" class="form-control" name="salaryTmoney" id="add-salaryTmoney">
+                        <input type="text" class="form-control" name="salaryTmoney" id="add-salaryTmoney" readonly>
                     </div>
 
                     <div class="form-group">
@@ -254,15 +254,15 @@
                     </div>
                     <div class="form-group">
                         <label for="edit-salaryMoney" class="control-label">薪资:</label>
-                        <input type="text" class="form-control" name="salaryMoney" id="edit-salaryMoney">
+                        <input type="text" class="form-control" name="salaryMoney" id="edit-salaryMoney" onchange="countEditSalary()">
                     </div>
                     <div class="form-group">
                         <label for="edit-salaryMoney" class="control-label">扣除薪资:</label>
-                        <input type="text" class="form-control" name="salaryFmoney" id="edit-salaryFmoney">
+                        <input type="text" class="form-control" name="salaryFmoney" id="edit-salaryFmoney" onchange="countEditSalary()">
                     </div>
                     <div class="form-group">
                         <label for="edit-salaryMoney" class="control-label">实际薪资:</label>
-                        <input type="text" class="form-control" name="salaryTmoney" id="edit-salaryTmoney">
+                        <input type="text" class="form-control" name="salaryTmoney" id="edit-salaryTmoney" readonly>
                     </div>
                     <div class="form-group">
                         <label for="edit-salaryText" class="control-label">备注:</label>
@@ -328,14 +328,24 @@
             type: "get",
             success: function (voString) {
                 let vo = eval('(' + voString + ')');
-                        modal.find('#edit-id').val(vo.id);
-                        modal.find('#edit-salaryName').val(vo.salaryName);
-                        modal.find('#edit-salaryNo').val(vo.salaryNo);
-                        modal.find('#edit-salaryDept').val(vo.salaryDept);
-                        modal.find('#edit-salaryMoney').val(vo.salaryMoney);
-                        modal.find('#edit-salaryFmoney').val(vo.salaryFmoney);
-                        modal.find('#edit-salaryTmoney').val(vo.salaryTmoney);
-                        modal.find('#edit-salaryText').val(vo.salaryText);
+                modal.find('#edit-id').val(vo.id);
+                modal.find('#edit-salaryName').val(vo.salaryName);
+                modal.find('#edit-salaryNo').val(vo.salaryNo);
+                modal.find('#edit-salaryDept').val(vo.salaryDept);
+                modal.find('#edit-salaryMoney').val(vo.salaryMoney);
+                modal.find('#edit-salaryFmoney').val(vo.salaryFmoney);
+                console.log(vo.salaryFmoney)
+                if (vo.salaryFmoney !== '' && vo.salaryFmoney !== undefined) {
+                    var salaryTmoney = vo.salaryMoney - vo.salaryFmoney;
+                    if (salaryTmoney > 0) {
+                        modal.find('#edit-salaryTmoney').val(vo.salaryMoney - vo.salaryFmoney);
+                    } else {
+                        modal.find('#edit-salaryTmoney').val(0);
+                    }
+                } else {
+                    modal.find('#edit-salaryTmoney').val(vo.salaryMoney);
+                }
+                modal.find('#edit-salaryText').val(vo.salaryText);
             }
         })
     })
@@ -358,6 +368,36 @@
             }
         })
     })
+
+    function countSalary() {
+        var salaryMoney = $("#add-salaryMoney").val()
+        var salaryFmoney = $("#add-salaryFmoney").val()
+        if (salaryFmoney !== '') {
+            var salaryTmoney = salaryMoney - salaryFmoney
+            if (salaryTmoney >= 0) {
+                $("#add-salaryTmoney").val(salaryMoney - salaryFmoney)
+            } else {
+                $("#add-salaryTmoney").val(0)
+            }
+        } else {
+            $("#add-salaryTmoney").val(salaryMoney)
+        }
+    }
+
+    function countEditSalary() {
+        var salaryMoney = $("#edit-salaryMoney").val()
+        var salaryFmoney = $("#edit-salaryFmoney").val()
+        if (salaryFmoney !== '') {
+            var salaryTmoney = salaryMoney - salaryFmoney
+            if (salaryTmoney >= 0) {
+                $("#edit-salaryTmoney").val(salaryMoney - salaryFmoney)
+            } else {
+                $("#edit-salaryTmoney").val(0)
+            }
+        } else {
+            $("#edit-salaryTmoney").val(salaryMoney)
+        }
+    }
     function searchList() {
         window.location.href = "salaryList?searchColumn="+document.getElementById("searchColumn").value+"&keyword=" + document.getElementById("search_keyword").value;
     }
