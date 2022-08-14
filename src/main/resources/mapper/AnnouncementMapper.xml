@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.dao.AnnouncementMapper">
+
+    <sql id="Base_Column_List">
+        `id`,`title`,`value`
+    </sql>
+
+    <!--新增-->
+    <insert id="doCreate" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.demo.vo.Announcement">
+        INSERT INTO `t_announcement`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test ='id != null'>`id`,</if>
+            <if test ='title != null'>`title`,</if>
+            <if test ='value != null'>`value`,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test ='id != null'>#{id},</if>
+            <if test ='title != null'>#{title},</if>
+            <if test ='value != null'>#{value},</if>
+        </trim>
+    </insert>
+
+    <!--批量删除-->
+    <delete id="doRemoveBatch" parameterType="java.util.Collection">
+        DELETE FROM `t_announcement` WHERE `id` IN
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--修改-->
+    <update id="doUpdate" parameterType="com.demo.vo.Salary">
+        UPDATE `t_announcement`
+        <set>
+            <if test ='id != null'>`id` = #{id},</if>
+            <if test ='title != null'>`title` = #{title},</if>
+            <if test ='value != null'>`value` = #{value},</if>
+        </set>
+        WHERE `id` = #{id}
+    </update>
+
+    <!--获取-->
+    <select id="findById" resultType="com.demo.vo.Announcement">
+        SELECT <include refid="Base_Column_List" /> FROM `t_announcement` WHERE `id` = #{id}
+    </select>
+
+    <!--列表-->
+    <select id="findAllSplit" parameterType="java.util.Map" resultType="com.demo.vo.Announcement">
+        SELECT <include refid="Base_Column_List" /> FROM `t_announcement`
+        <where>
+            <if test="searchColumn != null and searchColumn != '' and keyword != null and keyword != ''">
+                ${searchColumn} LIKE CONCAT('%',#{keyword},'%')  AND
+            </if>
+            1=1
+        </where>
+        ORDER BY id ASC
+    </select>
+</mapper>
