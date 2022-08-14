@@ -78,5 +78,8 @@
     <orderEntry type="library" name="Maven: org.eclipse.jdt:ecj:3.18.0" level="project" />
     <orderEntry type="library" name="Maven: jstl:jstl:1.2" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.75" level="project" />
+    <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="docs" level="application" />
+    <orderEntry type="library" name="echarts" level="application" />
   </component>
 </module>

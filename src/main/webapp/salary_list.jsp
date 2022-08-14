@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/main.css">
     <script src="js/jquery-3.5.1.js"></script>
     <script src="js/bootstrap.js"></script>
-    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+    <script src="js/echarts.js"></script>
 </head>
 
 <body>
