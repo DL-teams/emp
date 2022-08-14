@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/main.css">
     <script src="js/jquery-3.5.1.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
 </head>
 
 <body>
@@ -213,6 +214,7 @@
                         </tr>
                     </table>
                     <br>
+                    <div id="container" style="height: 300px; width: 600px; text-align: center"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-pill btn-line btn-warning" data-dismiss="modal">关闭</button>
@@ -365,6 +367,65 @@
                 modal.find('#info-salaryFmoney').text(vo.salaryFmoney);
                 modal.find('#info-salaryTmoney').text(vo.salaryTmoney);
                 modal.find('#info-salaryText').text(vo.salaryText);
+                var dom = document.getElementById("container");
+                var myChart = echarts.init(dom);
+                var app = {};
+
+                app.title = '环形图';
+
+                var option = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+                    },
+                    color:['#93D8A9','#FFB99D','#AF7DCC'],
+                    legend: {
+                        orient: 'horizontal',
+                        x: 'left',
+                        data: ['薪资', '扣除薪资', '实际薪资']
+                    },
+                    series: [{
+                        name: '工资',
+                        type: 'pie',
+                        radius: ['30%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            normal: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data: [
+                            {
+                                value: $('#info-salaryMoney').text(),
+                                name: '薪资'
+                            },
+                            {
+                                value: $('#info-salaryFmoney').text(),
+                                name: '扣除薪资'
+                            },
+                            {
+                                value: $('#info-salaryTmoney').text(),
+                                name: '实际薪资'
+                            }
+                        ]
+                    }]
+                };
+                if(option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                }
             }
         })
     })
@@ -443,5 +504,9 @@
         }
         return true;
     }
+</script>
+
+<script type="text/javascript">
+
 </script>
 </html>
