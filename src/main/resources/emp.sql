@@ -138,4 +138,12 @@ INSERT INTO `t_user` VALUES (30, 'pdh', '123456', '彭大浩', '男', '176111111
 INSERT INTO `t_user` VALUES (63, '123', '123', '吕小冲', '男', '19022222222', 'qaq', '普通用户');
 INSERT INTO `t_user` VALUES (64, '456', '456', '小小龙', '男', '13181719800', '无', '普通用户');
 
+DROP TABLE IF EXISTS `t_announcement`;
+CREATE TABLE `t_announcement`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `title` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '公告标题',
+  `value` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '公告内容',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 65 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '公告' ROW_FORMAT = Dynamic;
+
 SET FOREIGN_KEY_CHECKS = 1;
