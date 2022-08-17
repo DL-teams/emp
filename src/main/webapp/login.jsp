@@ -73,10 +73,6 @@
                 <div id="verify_image">
                     <img id="imgVerify" src="login/getVerify" alt="更换验证码" height="36" width="170" onclick="getVerify(this);">
                 </div>
-
-                <div id="submit_btn">
-                    <input type="button" onclick="aVerify()" value="判断是否正确">
-                </div>
             </div>
 
 			
@@ -101,15 +97,18 @@
         $("#imgVerify").attr("src", 'login/getVerify?' + Math.random());//jquery方式
     }
 
-    function aVerify() {
+
+</script>
+
+<script type="text/javascript">
+    //提交之前进行检查，如果return false，则不允许提交
+    function check() {
         let value = $("#verify_input").val();
-
-        if (value.length < 4) {
-            alert("验证码不足4位 , 请重新输入！！");
-            return 0;
+        if(value.length < 4){
+            alert("验证码长度不匹配，请重新输入");
+            return false;
         }
-
-
+        var flag = false;
         $.ajax({
             async: false,
             type: 'post',
@@ -119,30 +118,14 @@
                 verifyInput: value
             },
             success: function (result) {
-
-                if (result) {
-
-                    if (getVerify()) {
-
-                    } else {
-                        window.location.href = "http://localhost:8089/login.jsp";
-                    }
-
-                } else {
-                    alert("验证失败 , 点击确定重新验证");
-                    getVerify();
-                }
+                flag = result;
                 // window.location.reload();
             }
         });
-    }
-
-
-</script>
-
-<script type="text/javascript">
-    //提交之前进行检查，如果return false，则不允许提交
-    function check() {
+        if(!flag){
+            alert("验证码错误,请重新输入");
+            return false;
+        }
         //根据ID获取值
         var username = document.getElementById("username").value;
         var password = document.getElementById("password").value;

@@ -49,13 +49,13 @@ public class PicVerifyAction {
      * 校验验证码
      */
     @RequestMapping(value = "/checkVerify", method = RequestMethod.POST, headers = "Accept=application/json")
-    public boolean checkVerify(@RequestParam String verifyInput, HttpSession session) { //接收参数
+    public boolean checkVerify(@RequestParam String verifyInput, HttpServletRequest session) { //接收参数
         try {
 
             //从session中获取随机数
             String inputStr = verifyInput;
 
-            String random = (String) session.getAttribute("RANDOMVALIDATECODEKEY");
+            String random = (String) session.getSession().getAttribute("RANDOMVALIDATECODEKEY");
 
             if (random == null || "".equals(random) || !random.equalsIgnoreCase(inputStr)) {
                 return false;
