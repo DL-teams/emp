@@ -22,27 +22,27 @@ public class DeptServiceImpl implements DeptService {
     private DeptMapper deptMapper;
 
 
-    //@Override
+    @Override
     public boolean insert(Dept vo) {
         return this.deptMapper.doCreate(vo) == 1;
     }
 
-    //@Override
+    @Override
     public boolean delete(Collection<Serializable> ids) {
         return ids.isEmpty() ? false : this.deptMapper.doRemoveBatch(ids) == ids.size();
     }
 
-    //@Override
+    @Override
     public boolean update(Dept vo) {
         return this.deptMapper.doUpdate(vo) == 1;
     }
 
-    //@Override
+    @Override
     public Dept get(Serializable id) {
         return this.deptMapper.findById(id);
     }
 
-    //@Override
+    @Override
     public Map<String, Object> list(Map<String, Object> params) {
         Map<String, Object> resultMap = new HashMap();
         resultMap.put("totalCount", this.deptMapper.getAllCount(params));

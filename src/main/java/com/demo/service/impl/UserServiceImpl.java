@@ -22,27 +22,27 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
 
-    //@Override
+    @Override
     public boolean insert(User vo) {
         return this.userMapper.doCreate(vo) == 1;
     }
 
-    //@Override
+    @Override
     public boolean delete(Collection<Serializable> ids) {
         return ids.isEmpty() ? false : this.userMapper.doRemoveBatch(ids) == ids.size();
     }
 
-    //@Override
+    @Override
     public boolean update(User vo) {
         return this.userMapper.doUpdate(vo) == 1;
     }
 
-    //@Override
+    @Override
     public User get(Serializable id) {
         return this.userMapper.findById(id);
     }
 
-    //@Override
+    @Override
     public Map<String, Object> list(Map<String, Object> params) {
         Map<String, Object> resultMap = new HashMap();
         resultMap.put("totalCount", this.userMapper.getAllCount(params));

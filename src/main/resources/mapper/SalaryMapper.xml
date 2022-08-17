@@ -86,7 +86,7 @@
             LIMIT #{startIndex},#{pageSize};
         </if>
     </select>
-    <!--数量-->
+    <!--数量/每行一条-->
     <select id="getAllCount" parameterType="java.util.Map" resultType="Integer">
         SELECT COUNT(*) FROM `t_salary`
         <where>

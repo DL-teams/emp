@@ -22,27 +22,27 @@ public class LeaveServiceImpl implements LeaveService {
     private LeaveMapper leaveMapper;
 
 
-    //@Override
+    @Override
     public boolean insert(Leave vo) {
         return this.leaveMapper.doCreate(vo) == 1;
     }
 
-    //@Override
+    @Override
     public boolean delete(Collection<Serializable> ids) {
         return ids.isEmpty() ? false : this.leaveMapper.doRemoveBatch(ids) == ids.size();
     }
 
-    //@Override
+    @Override
     public boolean update(Leave vo) {
         return this.leaveMapper.doUpdate(vo) == 1;
     }
 
-    //@Override
+    @Override
     public Leave get(Serializable id) {
         return this.leaveMapper.findById(id);
     }
 
-    //@Override
+    @Override
     public Map<String, Object> list(Map<String, Object> params) {
         Map<String, Object> resultMap = new HashMap();
         resultMap.put("totalCount", this.leaveMapper.getAllCount(params));

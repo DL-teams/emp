@@ -8,8 +8,8 @@ import java.util.List;
  * @param <T>
  */
 public class PageBean<T> {
-    private List<T> list;//根据条件查询出来的list集合
-    private int totalRecord;//根据条件查询出来的数量
+    private List<T> list;//根据条件查询出来的list集合，声明泛型list
+    private int totalRecord;//根据条件查询出来总的数量
 
     public List<T> getList() {
         return list;
@@ -23,9 +23,7 @@ public class PageBean<T> {
         return totalRecord;
     }
 
-    public void setTotalRecord(int totalRecord) {
-        this.totalRecord = totalRecord;
-    }
+    public void setTotalRecord(int totalRecord) { this.totalRecord = totalRecord; }
 
     //--分页逻辑
     //已知数据
@@ -88,9 +86,7 @@ public class PageBean<T> {
         return pageNum;
     }
 
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
+    public void setPageNum(int pageNum) { this.pageNum = pageNum; }
 
     public int getPageSize() {
         return pageSize;

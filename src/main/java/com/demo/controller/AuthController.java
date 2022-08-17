@@ -45,7 +45,7 @@ public class AuthController extends HttpServlet {
                 return;
             }
         }
-        request.getSession().setAttribute("alert_msg", "错误：用户名或密码错误！");
+        request.getSession().setAttribute("alert_msg", "错误：用户名或密码错误！");//提示框显示
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 

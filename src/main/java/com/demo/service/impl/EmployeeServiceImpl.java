@@ -22,27 +22,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeMapper employeeMapper;
 
 
-    //@Override
+    @Override
     public boolean insert(Employee vo) {
         return this.employeeMapper.doCreate(vo) == 1;
     }
 
-    //@Override
+    @Override
     public boolean delete(Collection<Serializable> ids) {
         return ids.isEmpty() ? false : this.employeeMapper.doRemoveBatch(ids) == ids.size();
     }
 
-    //@Override
+    @Override
     public boolean update(Employee vo) {
         return this.employeeMapper.doUpdate(vo) == 1;
     }
 
-    //@Override
+    @Override
     public Employee get(Serializable id) {
         return this.employeeMapper.findById(id);
     }
 
-    //@Override
+    @Override
     public Map<String, Object> list(Map<String, Object> params) {
         Map<String, Object> resultMap = new HashMap();
         resultMap.put("totalCount", this.employeeMapper.getAllCount(params));

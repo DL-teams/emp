@@ -22,31 +22,31 @@ public class SalaryServiceImpl implements SalaryService {
     private SalaryMapper salaryMapper;
 
 
-    //@Override
+    @Override
     public boolean insert(Salary vo) {
         return this.salaryMapper.doCreate(vo) == 1;
     }
 
-    //@Override
+    @Override
     public boolean delete(Collection<Serializable> ids) {
         return ids.isEmpty() ? false : this.salaryMapper.doRemoveBatch(ids) == ids.size();
     }
 
-    //@Override
+    @Override
     public boolean update(Salary vo) {
         return this.salaryMapper.doUpdate(vo) == 1;
     }
 
-    //@Override
+    @Override
     public Salary get(Serializable id) {
         return this.salaryMapper.findById(id);
     }
 
-    //@Override
+    @Override
     public Map<String, Object> list(Map<String, Object> params) {
         Map<String, Object> resultMap = new HashMap();
-        resultMap.put("totalCount", this.salaryMapper.getAllCount(params));
-        resultMap.put("list", this.salaryMapper.findAllSplit(params));
+        resultMap.put("totalCount", this.salaryMapper.getAllCount(params)); //获取所有符合条件行的数量
+        resultMap.put("list", this.salaryMapper.findAllSplit(params));  //获取所有符合条件行的数据
         return resultMap;
     }
 }

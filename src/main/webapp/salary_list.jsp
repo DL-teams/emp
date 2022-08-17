@@ -376,7 +376,7 @@
                 var option = {
                     tooltip: {
                         trigger: 'item',
-                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+                        formatter: "{a} <br/>{b}: {c} ({d}%)" //对应字段值 行记录数据 行下标
                     },
                     color:['#93D8A9','#FFB99D','#AF7DCC'],
                     legend: {
@@ -423,6 +423,7 @@
                         ]
                     }]
                 };
+
                 if(option && typeof option === "object") {
                     myChart.setOption(option, true);
                 }

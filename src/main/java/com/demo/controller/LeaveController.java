@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -22,7 +21,6 @@ public class LeaveController {
 
     @Autowired
     private LeaveService leaveService;
-
     /**
      * 增加请假
      *
@@ -103,10 +101,10 @@ public class LeaveController {
      * @param request
      * @throws IOException
      */
-    @RequestMapping("leaveList")
-    public void list(HttpServletResponse response, HttpServletRequest request) throws IOException {
-        this.redirectList(request, response);
-    }
+        @RequestMapping("leaveList")
+        public void list(HttpServletResponse response, HttpServletRequest request) throws IOException {
+            this.redirectList(request, response);
+        }
 
     /**
      * 跳转到列表页面
@@ -129,6 +127,7 @@ public class LeaveController {
         com.demo.util.PageBean<Object> pb = new com.demo.util.PageBean(Integer.valueOf(pageNum != null ? pageNum : "1"), totalRecord);
         params.put("startIndex", pb.getStartIndex());
         params.put("pageSize", pb.getPageSize());
+        //set数据
         List list = (List) leaveService.list(params).get("list");//根据分页参数startIndex、pageSize查询出来的最终结果list
         pb.setServlet("leaveList");
         pb.setSearchColumn(searchColumn);
@@ -136,7 +135,6 @@ public class LeaveController {
         pb.setList(list);
         request.getSession().setAttribute("pageBean", pb);
         request.getSession().setAttribute("list", pb.getList());
-
         response.sendRedirect("leave_list.jsp");
     }
 }

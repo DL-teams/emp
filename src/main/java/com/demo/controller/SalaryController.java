@@ -121,14 +121,16 @@ public class SalaryController {
         Map<String, Object> params = new HashMap();//用来保存控制层传进来的参数(查询条件)
         params.put("searchColumn", searchColumn);//要查询的列
         params.put("keyword", keyword);//查询的关键字
-        Map<String, Object> map = salaryService.list(params);
-        request.getSession().setAttribute("list", map.get("list"));
+        Map<String, Object> map = salaryService.list(params); //通过list方法获取所有符合条件行的数
+        request.getSession().setAttribute("list", map.get("list")); //请求获取符合条件行的数据
 
-        Integer totalRecord = (Integer) map.get("totalCount");//根据查询条件取出对应的总记录数，用于分页
+        //分页
+        Integer totalRecord = (Integer) map.get("totalCount");//给总页数设置为根据查询条件取出对应的总记录行的数据，用于分页
         String pageNum = Util.decode(request, "pageNum");//封装分页参数
         com.demo.util.PageBean<Object> pb = new com.demo.util.PageBean(Integer.valueOf(pageNum != null ? pageNum : "1"), totalRecord);
-        params.put("startIndex", pb.getStartIndex());
-        params.put("pageSize", pb.getPageSize());
+        params.put("startIndex", pb.getStartIndex());//首页值
+        params.put("pageSize", pb.getPageSize());//每页数据条数值
+
         List list = (List) salaryService.list(params).get("list");//根据分页参数startIndex、pageSize查询出来的最终结果list
         pb.setServlet("salaryList");
         pb.setSearchColumn(searchColumn);
